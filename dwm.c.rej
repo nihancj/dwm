@@ -1,39 +1,31 @@
 --- dwm.c
 +++ dwm.c
-@@ -170,6 +171,7 @@ static void focus(Client *c);
- static void focusin(XEvent *e);
- static void focusmon(const Arg *arg);
- static void focusstack(const Arg *arg);
-+static int getdwmblockspid();
- static int getrootptr(int *x, int *y);
- static long getstate(Window w);
- static int gettextprop(Window w, Atom atom, char *text, unsigned int size);
-@@ -444,9 +450,26 @@ buttonpress(XEvent *e)
- 			arg.ui = 1 << i;
- 		} else if (ev->x < x + blw)
- 			click = ClkLtSymbol;
--		else if (ev->x > selmon->ww - TEXTW(stext))
-+		else if (ev->x > (x = selmon->ww - TEXTW(stext) + lrpad)) {
- 			click = ClkStatusText;
--		else
+@@ -283,17 +305,27 @@ static void (*handler[LASTEvent]) (XEvent *) = {
+ 	[UnmapNotify] = unmapnotify
+ };
+ static Atom wmatom[WMLast], netatom[NetLast];
++static int epoll_fd;
++static int dpy_fd;
+ static int running = 1;
+ static Cur *cursor[CurLast];
+ static Clr **scheme;
+ static Display *dpy;
+ static Drw *drw;
+-static Monitor *mons, *selmon;
++static Monitor *mons, *selmon, *lastselmon;
+ static Window root, wmcheckwin;
+ 
++#include "ipc.h"
 +
-+			char *text = rawstext;
-+			int i = -1;
-+			char ch;
-+			dwmblockssig = 0;
-+			while (text[++i]) {
-+				if ((unsigned char)text[i] < ' ') {
-+					ch = text[i];
-+					text[i] = '\0';
-+					x += TEXTW(text) - lrpad;
-+					text[i] = ch;
-+					text += i+1;
-+					i = -1;
-+					if (x >= ev->x) break;
-+					dwmblockssig = ch;
-+				}
-+			}
-+		} else
- 			click = ClkWinTitle;
- 	} else if ((c = wintoclient(ev->window))) {
- 		focus(c);
+ /* configuration, allows nested code to access above variables */
+ #include "config.h"
+ 
++#ifdef VERSION
++#include "IPCClient.c"
++#include "yajl_dumps.c"
++#include "ipc.c"
++#endif
++
+ /* compile-time check if all tags fit into an unsigned int bit array. */
+ struct NumTags { char limitexceeded[LENGTH(tags) > 31 ? -1 : 1]; };
+ 
