@@ -1,0 +1,6 @@
+		{ "background",             STRING,  &normbgcolor },
+		{ "color7",                 STRING,  &normbordercolor },
+		{ "color15",                STRING,  &normfgcolor },
+		{ "color12",                STRING,  &selbgcolor },
+		{ "foreground",             STRING,  &selbordercolor },
+		{ "color15",                STRING,  &selfgcolor },
