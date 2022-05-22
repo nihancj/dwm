@@ -1,5 +1,5 @@
 		{ "color0",		STRING,	&normbordercolor },
-		{ "color8",		STRING,	&selbordercolor },
+		{ "color4",		STRING,	&selbordercolor },
 		{ "color0",		STRING,	&normbgcolor },
 		{ "color3",		STRING,	&normfgcolor },
 		{ "color0",		STRING,	&selfgcolor },
