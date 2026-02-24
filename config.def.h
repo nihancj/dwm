@@ -146,7 +146,7 @@ static Button buttons[] = {
  * ud means up and down
  */
 static Gesture gestures[] = {
-	{ "u",  spawn, {.v = termcmd } },
+	// { "u",  spawn, {.v = termcmd } },
 	{ "d",  spawn, {.v = dmenucmd } },
 };
 
