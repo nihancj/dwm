@@ -96,7 +96,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
 	{ MODKEY,                       XK_space,  togglefloating, {0} },
 	{ MODKEY|ShiftMask,             XK_space,  setlayout,      {0} },
-	{ MODKEY,                       XK_g,      gesture,        {0} },
+	{ MODKEY,                       XK_z,      gesture,        {0} },
 	{ MODKEY,                       XK_Escape,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_Escape,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
@@ -148,7 +148,9 @@ static Button buttons[] = {
  */
 static Gesture gestures[] = {
 	// { "u",  spawn, {.v = termcmd } },
-	{ "d",  spawn, {.v = dmenucmd } },
+	/*{ "d",  spawn, {.v = dmenucmd } },*/
+	{ "ud",   focusstack,     {.i = +1 } },
+	{ "lr",   focusstack,     {.i = +1 } },
 };
 
 static const char *ipcsockpath = "/tmp/dwm.sock";
